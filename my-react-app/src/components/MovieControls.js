@@ -12,9 +12,9 @@ const MovieControls = ({ movie, type }) => {
     <div className="inner-card-controls">
       {type === "FavoriteList" && (
         <>
-          {/* <button className="ctrl-btn" onClick={() => addMovieToWatched(movie)}>
+          <button className="ctrl-btn" onClick={() => addMovieToWatched(movie)}>
             <i className="fa-fw far fa-eye"></i>
-          </button> */}
+          </button>
 
           <button
             className="ctrl-btn"
