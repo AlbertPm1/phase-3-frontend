@@ -10,7 +10,7 @@ const MovieControls = ({ movie, type }) => {
   } = useContext(GlobalContext);
   return (
     <div className="inner-card-controls">
-      {type === "FavoriteList" && (
+      {type === "watchList" && (
         <>
           <button className="ctrl-btn" onClick={() => addMovieToWatched(movie)}>
             <i className="fa-fw far fa-eye"></i>

@@ -1,9 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
-
+import "../App.css"
+  
 const WatchList = () => {
-  const { watchList } = useContext(GlobalContext);
+ const [movies, setMovies] = useState([])
+
+ function handleDelete(id) {
+  fetch(`http://localhost:9292/movies/${id}`,{
+    method: 'DELETE',
+  })
+  .then(() => {
+    const Delete = movies.filter(m => m.id !==id)
+    setMovies(Delete)
+  });
+ }
+
+
+  useEffect(()=>{
+
+    fetch("http://localhost:9292/movies")
+    .then(response => response.json())
+    .then(movies => setMovies(movies))
+  },[])
 
   return (
     <div className="movie-page">
@@ -11,18 +30,28 @@ const WatchList = () => {
         <div className="header">
           <h1 className="heading">My Watch List</h1>
           <span className="count-pill">
-            {watchList.length} {watchList.length === 1 ? "Movie" : "Movies"}
+            
           </span>
         </div>
-        {watchList.length > 0 ? (
+      
           <div className="movie-grid">
-            {watchList.map((movie) => (
-              <MovieCard movie={movie} type="watchList" key={movie.id} />
-            ))}
+         
+          {movies.map(movie =>{
+              return(
+                <div key = {movie.id}>
+                  <p>title: {movie.title}</p>
+                  <img id = "poster"src = {movie.poster}/>
+                  <aside>director: {movie.director_id}</aside>
+                  <button onClick={()=>handleDelete(movie.id)}>Delete</button>
+                  
+
+                </div>
+              )
+            })}
           </div>
-        ) : (
-          <h2 className="no-movies">No Movies In Watch List</h2>
-        )}
+       
+          {/* <h2 className="no-movies">No Movies In Watch List</h2> */}
+     
       </div>
     </div>
   );
